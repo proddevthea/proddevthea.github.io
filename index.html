@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>THROW ME CARD GAME</title>
+    <h1>THROW ME CARD GAME</h1>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            
+        }
+
+        .swiper-container {
+            width: 300px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .swiper-slide {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: #333;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            color: #333;
+        }
+
+        .swiper-pagination-bullet {
+            background-color: #333;
+        }
+
+        button {
+            background-color: #E7CEE3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .editable {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .set-cards-button {
+            margin-top: 10px;
+
+        }
+         /* Define an array of colors */
+         .colors {
+            background-color: #f8d7da; /* Red */
+        }
+        .colors:nth-child(2) {
+            background-color: #cce5ff; /* Blue */
+        }
+        .colors:nth-child(3) {
+            background-color: #d4edda; /* Green */
+        }
+        .colors:nth-child(4) {
+            background-color: #fff3cd; /* Yellow */
+        }
+        .colors:nth-child(5) {
+            background-color: #d1ecf1; /* Light Blue */
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <button onclick="changeText()">Change Text</button>
+    <button onclick="drawWord()">Draw</button>
+    <div class="editable" contenteditable="true" onblur="updateCardCount()">
+        3 <!-- Initial value for the number of cards -->
+    </div>
+    <div class="swiper-container"> 
+        <div class="swiper-wrapper">
+            <div class="swiper-slide colors" contenteditable="true">Card 1</div>
+            <div class="swiper-slide colors" contenteditable="true">Card 2</div>
+            <div class="swiper-slide colors" contenteditable="true">Card 3</div>
+            <div class="swiper-slide colors" contenteditable="true">Card 4</div>
+            <div class="swiper-slide colors" contenteditable="true">Card 5</div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            direction: 'horizontal',
+            loop: false,
+            grabCursor: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            spaceBetween: 30,
+            slidesPerView: 'auto',
+        });
+
+        function updateCardCount() {
+            var cardCountElement = document.querySelector('.editable');
+            var cardCount = parseInt(cardCountElement.textContent);
+            if (!isNaN(cardCount) && cardCount >= 1 && cardCount <= 10) {
+                swiper.params.slidesPerView = cardCount;
+                swiper.update();
+            }
+        }
+
+        function setCardCount() {
+            var cardCountInput = prompt('Enter the number of cards (1-10):');
+            var cardCount = parseInt(cardCountInput);
+            if (!isNaN(cardCount) && cardCount >= 1 && cardCount <= 10) {
+                swiper.params.slidesPerView = cardCount;
+                swiper.update();
+            }
+        }
+
+
+        function changeText() {
+            var cards = document.querySelectorAll('.swiper-slide');
+            cards.forEach(function(card) {
+                card.textContent = 'New Text';
+            });
+        }
+
+        function drawWord() {
+            var words = ['SWITCH SWITCH SWITCH SWITCH SWITCH', 'FLIP FLIP FLIP FLIP FLIP', 'HEARTSTOPPER HEARTSTOPPER HEARTSTOPPER HEARTSTOPPER HEARTSTOPPER'];
+            var randomIndex = Math.floor(Math.random() * words.length);
+            alert(words[randomIndex]);
+        }
+    </script>
+</body>
+</html>
